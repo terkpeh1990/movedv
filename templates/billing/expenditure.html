@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+   Expenditure Streams
+{% endblock head %}
+
+{% block breadcrumb %}
+    {% for group in user.groups.all %} {% if group.name == 'manager' %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:managerdashboard' %}">Home</a></li>
+    {% else %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Home</a></li>
+    {% endif %}
+    {% endfor %}
+    <li class="breadcrumb-item active">Expenditure Streams</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg">
+        <div class="card  card-primary card-outline p-4 m-4">
+
+            <form  >
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-row  ">
+                        <div class="form-group col">
+                            {{ myFilter.form.start_date|as_crispy_field }}
+                        </div>
+                        <div class="form-group col">
+                            {{ myFilter.form.end_date|as_crispy_field }}
+                        </div>
+
+                    </div>
+                    <div class="form-row  ">
+                        <div class="form-group col-md-2 col-sm-12">
+                            <button id="next-page-btn" class="btn  btn-outline-primary  px-4 btn-large"><span class="px-2">Filter</span><i class="fas fa-arrow-right pr-1"></i></button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="">
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table  table-striped table-hover" role="grid"
+                                aria-describedby="example2_info">
+                                <thead class="">
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="Browser: activate to sort column ascending">Id</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="CSS grade: activate to sort column ascending">Description</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="CSS grade: activate to sort column ascending">Trip</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="CSS grade: activate to sort column ascending">Amount</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                            aria-label="CSS grade: activate to sort column ascending">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for revenue in ord %}
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td>{{revenue.id}}</td>
+                                        <td>{{revenue.description}}</td>
+                                        <td>{{revenue.trip}}</td>
+                                        <td>{{revenue.amount}}</td>
+
+                                        <td>{{revenue.created_date}}</td>
+                                    </tr>
+
+                                    {% endfor %}
+                                    <tr role="row" class="odd">
+                                        <td>
+                                            <b>TOTAL</b>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+
+                                            <b>GH&#8373 {{ total.cc}}</b>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

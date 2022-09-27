@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+   Update Service
+{% endblock head %}
+
+{% block breadcrumb %}
+    {% for group in user.groups.all %} {% if group.name == 'manager' %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:managerdashboard' %}">Home</a></li>
+    {% else %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Home</a></li>
+    {% endif %}
+    {% endfor %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_product' %}">Manage Services</a></li>
+    <li class="breadcrumb-item active">Update Service</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg">
+        <div class="card  card-primary card-outline p-4 m-4">
+            
+            <form role="form" method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group mb-12 col">
+                            <label for="">Name Of Service</label>
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                        <div class="form-group mb-12 col">
+                          <label for="">Category</label>
+                          {{ form.category|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mb-12 col">
+                            <label for="">Office Price</label>
+                            {{ form.office|as_crispy_field }}
+                        </div>
+                        <div class="form-group mb-12 col">
+                          <label for="">HQ Price</label>
+                          {{ form.hq|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="ml-2 p-3 mt-5 d-flex justify-content-end">
+                        <button id="next-page-btn" class="btn  btn-outline-primary  px-4 btn-large"><span class="px-2">Update</span><i class="fas fa-arrow-right pr-1"></i></button>
+                        
+                      
+                      </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div> 
+{% endblock %}

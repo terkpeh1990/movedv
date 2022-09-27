@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+   Create Activity
+{% endblock head %}
+
+{% block breadcrumb %}
+{% for group in user.groups.all %} {% if group.name == 'manager' %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:managerdashboard' %}">Home</a></li>
+{% else %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Home</a></li>
+{% endif %}
+{% endfor %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_product' %}">Manage Activities</a></li>
+    <li class="breadcrumb-item active">Create Activity</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-7">
+        <div class="card  card-primary card-outline pl-4 pt-4 ml-4 mt-4">
+            <div class="card-header">
+                <h3 class="profile-username text-center text-muted">DVLA ODA</h3>
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Order No.</b> <a class="float-right text-muted">{{order.id}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Customer</b> <a class="float-right text-muted">{{order.customer}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Customer No.</b> <a class="float-right text-muted">{{order.customer.phone}}</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <b>Date</b> <a class="float-right text-muted">{{order.order_date}}</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-sm" id="my_friends">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Unit Price(GHC)</th>
+                            
+                           
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in detail %}
+                        <tr>
+                            <td>{{item.product.name}}</td>
+                            <td>{{item.unit_price}}</td>
+                            
+                            
+
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            
+                        </tr>
+
+                        <tr>
+
+                            <td><b>Sub Total</b></td>
+                            <td><b>{{order.gross_price}}</b> </td>
+
+                        </tr>
+                        
+                        
+
+                    </tbody>
+                </table>
+                <div class="row">
+
+                    
+                    
+        
+
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="card  card-primary card-outline pt-4 mt-4">
+            
+            {% if order.money_paid > 0.00 %}
+            <div class="p-4 m-4">
+                <div class="col text-center">
+                    <a class="btn btn-outline-danger mt-2 ml-2" href="{% url 'billing:close' %}">Close </a>
+    
+                </div>
+            </div>
+            
+            
+            {% else %}
+            <form id="friend-form" method="post" novalidate>
+                {% csrf_token %}
+                
+                    <div class="card-body">
+                        <div class="form-group ">
+                            {% for hidden_field in form.hidden_fields %}
+                            {{ hidden_field }}
+                            {% endfor %}
+
+                            <div class=" col-md-4 mx-auto">
+                                {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+         
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="">Enter Amount.</label>
+                                    {{ form.money|as_crispy_field }}
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col text-center">
+                                    <button class="btn  btn-sm btn-outline-primary" value="Create Friend">Make Payment</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                
+            </form>
+            
+
+            {% endif %}
+                
+            
+            
+        </div>
+    </div>
+
+</div> 
+
+{% endblock %}

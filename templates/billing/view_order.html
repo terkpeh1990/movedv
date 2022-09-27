@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+   View Activity
+{% endblock head %}
+
+{% block breadcrumb %}
+    {% for group in user.groups.all %} {% if group.name == 'manager' %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:managerdashboard' %}">Home</a></li>
+    {% else %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Home</a></li>
+    {% endif %}
+    {% endfor %}
+    <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Manage Activites</a></li>
+    <li class="breadcrumb-item active">View Activity</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg">
+        <div class="card  card-primary card-outline p-4 m-4">
+
+                <div class="card-header">
+                    <h3 class="profile-username text-center text-muted">DVLA</h3>
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <b>Order No.</b> <a class="float-right text-muted">{{order.id}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Customer</b> <a class="float-right text-muted">{{order.customer}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Customer No.</b> <a class="float-right text-muted">{{order.customer.phone}}</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <b>Date</b> <a class="float-right text-muted">{{order.order_date}}</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="card-body text-center">
+                    <table class="table table-striped table-sm" id="my_friends">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Unit Price</th>
+                                {% for group in user.groups.all %} {% if group.name == 'manager' %}
+
+                                    <th>Action</th>
+                                {% endif %}
+                                {% endfor %}
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in detail %}
+                            <tr>
+                                <td>{{item.product.name}}</td>
+                                <td>{{item.unit_price}}</td>
+
+                            {% for group in user.groups.all %} {% if group.name == 'manager' %}
+
+                            <td>
+                                    <a class ="btn btn-sm btn-outline-danger" href="{% url 'billing:errordeletes_items' item.id %}">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                            </td>
+                                {% endif %}
+                                {% endfor %}
+
+                            </tr>
+                            {% endfor %}
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+
+
+                                <td><b>Sub Total</b></td>
+                                <td><b>{{order.gross_price}}</b> </td>
+
+                            </tr>
+
+
+                            {% if order.money_balance > 0.00 %}
+
+                            {% endif %}
+
+
+
+                        </tbody>
+                    </table>
+                    <div class="form-row">
+                    {% for group in user.groups.all %} {% if group.name == 'manager' %}
+                        {% if order.correction == True %}
+                        <div class="col text-center">
+                            <a class="btn btn-outline-primary mt-2 ml-2" href="{% url 'billing:correction_done' order.id %}">Done</a>
+
+                        </div>
+                        {% else %}
+                        <div class="col text-center">
+                            <a class="btn btn-outline-danger mt-2 ml-2" href="{% url 'billing:closed'  %}">Close </a>
+
+                        </div>
+                        {% endif %}
+                        {% else %}
+                         <div class="col text-center">
+                            <a class="btn btn-outline-danger mt-2 ml-2" href="{% url 'billing:closed'  %}">Close </a>
+
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!--<div class="col text-center">-->
+                        <!--    <button id="print" onclick="printPageArea('printableArea')" >Print</button>-->
+                        <!--</div>-->
+
+                    </div>
+                </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

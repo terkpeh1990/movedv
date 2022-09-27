@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+ Trip Dashboard
+{% endblock head %}
+
+{% block breadcrumb %}
+    {% for group in user.groups.all %} {% if group.name == 'manager' %}
+        <li class="breadcrumb-item"><a href="{% url 'billing:managerdashboard' %}">Home</a></li>
+    {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'billing:manage_orders' %}">Home</a></li>
+    {% endif %}
+    {% endfor %}
+<li class="breadcrumb-item active">Trip Dashboard</li>
+
+
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class = "row">
+ <div class="col-lg-9">
+    <div class="card card-primary card-outline ">
+        <div class="card-header">
+          Pending PV'S
+        </div>
+        <div class="card-body">
+             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <table id="example2" class="table  table-striped table-hover" role="grid" aria-describedby="example2_info">
+                <thead class="">
+                    <tr role="row">
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Browser: activate to sort column ascending">Description</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Browser: activate to sort column ascending">Amount</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending">Status</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending">Date Created</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="CSS grade: activate to sort column ascending">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pending_pv %}
+                    </tr>
+                    <tr role="row" class="odd">
+                        <td>{{ p.description }}</td>
+                        <td>{{ p.amount }}</td>
+
+                        {% if p.status == 'Pending' %}
+                        <td><span class="badge badge-pill badge-warning">{{p.status}}</span></td>
+                        {% elif p.status == 'Approved' %}
+                        <td><span class="badge badge-pill badge-info">{{p.status}}</span></td>
+                        {% else %}
+                        <td><span class="badge badge-pill badge-danger">{{p.status}}</span></td>
+                        {% endif %}
+
+                        <td>{{ p.created_date }}</td>
+                        <td>
+
+                            <a class="btn btn-sm btn-outline-primary" href="{% url 'billing:View_pv' p.id %}">View</a>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+             </div>
+        </div>
+
+    </div>
+    <div class="card card-primary card-outline ">
+        <div class="card-header">
+          Approved PV'S
+        </div>
+        <div class="card-body">
+             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <table id="example2" class="table  table-striped table-hover" role="grid" aria-describedby="example2_info">
+                <thead class="">
+                    <tr role="row">
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Browser: activate to sort column ascending">Description</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Browser: activate to sort column ascending">Amount</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending">Status</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending">Date Created</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                            aria-label="CSS grade: activate to sort column ascending">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in approved_pv %}
+                    </tr>
+                    <tr role="row" class="odd">
+                        <td>{{ p.description }}</td>
+                        <td>{{ p.amount }}</td>
+
+                        {% if p.status == 'Pending' %}
+                        <td><span class="badge badge-pill badge-warning">{{p.status}}</span></td>
+                        {% elif p.status == 'Approved' %}
+                        <td><span class="badge badge-pill badge-info">{{p.status}}</span></td>
+                        {% else %}
+                        <td><span class="badge badge-pill badge-danger">{{p.status}}</span></td>
+                        {% endif %}
+
+                        <td>{{ p.created_date }}</td>
+                        <td>
+
+                            <a class="btn btn-sm btn-outline-primary" href="{% url 'billing:View_pv' p.id %}">View</a>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+             </div>
+        </div>
+
+    </div>
+ </div>
+ <div class="col-lg-3">
+    <div class="row pl-2 ml-2 pr-2 mr-2">
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-default elevation-1"><i class="fas fa-users"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Attendance</span>
+                    <span class="info-box-number">
+                        {{attendance}}
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default elevation-1"><i class="fas fa-comment-dollar"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">HQ Revenue</span>
+                    <span class="info-box-number">{{total_revenue.hq}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default elevation-1"><i class="fas fa-comments-dollar"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">IGF Revenue</span>
+                    <span class="info-box-number">{{total_revenue.igf}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default elevation-1"><i class="fas fa-balance-scale-right"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Revenue</span>
+                    <span class="info-box-number">{{total_revenue.cc}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default  elevation-1"><i class="fas fa-balance-scale-left"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Expenditure</span>
+                    <span class="info-box-number">{{total_expenditure.cc}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default  elevation-1"><i class="fas fa-balance-scale"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Cash Available</span>
+                    <span class="info-box-number">{{expected_cash}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-default  elevation-1"><i class="fas fa-donate"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Trip Pending Pvs Value</span>
+                    <span class="info-box-number">{{total_pending.cc}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix hidden-md-up"></div>
+
+
+    </div>
+ </div>
+</div>
+
+
+{% endblock %}

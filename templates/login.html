@@ -1,0 +1,88 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DVLA SYSTEM</title>
+
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static '' fontawesome-free/css/all.min.css' %}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bbootstrap 4 -->
+<link rel="stylesheet" href="{% static 'tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+<!-- iCheck -->
+<link rel="stylesheet" href="{% static 'icheck-bootstrap/icheck-bootstrap.min.css' %}">
+<!-- JQVMap -->
+<link rel="stylesheet" href="{% static 'jqvmap/jqvmap.min.css' %}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'  %}">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="{% static 'overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="{% static 'daterangepicker/daterangepicker.css' %}">
+<!-- summernote -->
+<link rel="stylesheet" href="{% static 'summernote/summernote-bs4.css' %}">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- datatable -->
+<link rel="stylesheet" href="{% static 'datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+</head>
+
+<body class="hold-transition login-page bg-white">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="{% static 'dist/img/logo2.jpeg' %}" />
+    </div>
+
+     <!--/.login-logo-->
+     <!--<div class="card">-->
+     <!--<div class="card-body login-card-body">-->
+    <h4 class="login-box-msg text-muted" >Login</h4>
+    <h5 class="login-box-msg text-muted" >Enter your username and password</h5>
+    <form method="post">
+      {% csrf_token %}
+      <div class="col-12  ">
+        {{ form|crispy }}
+      </div>
+
+      <div class="col-12  ">
+        <div class="">
+          <button type="submit" class="btn btn-block btn-outline-success ">Log In</button>
+        </div>
+
+      </div>
+
+
+    </form>
+
+
+
+    <!-- </div> -->
+    <!-- /.login-card-body -->
+    <!-- </div> -->
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery/jquery.min.map' %}"></script>
+  <script src="{% static 'plugins/jquery/jquery.slim.js' %}"></script>
+  <script src="{% static 'plugins/jquery/jquery.slim.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery/jquery.slim.min.map' %}"></script>
+  <script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+</body>
+
+</html>

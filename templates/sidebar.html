@@ -1,0 +1,296 @@
+{% load static %}
+{% for group in user.groups.all %} {% if group.name == 'manager' %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'billing:managerdashboard' %}" class="brand-link">
+    <img src="{% static 'dist/img/logo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light"><b>DVLA</b>  Billing System</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+        <li class=bg-white class="nav-item">
+          <!-- {% url 'student_home' as student_home %} -->
+          <!-- {% if request.path == student_home %} active {% endif %} -->
+          <a href="{% url 'billing:managerdashboard' %}" class="nav-link ">
+            <i class="nav-icon fas fa-anchor"></i>
+            <p>
+              Home
+              {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+            </p>
+          </a>
+        </li>
+        <br>
+
+        <li class="nav-item">
+          {% url 'billing:manage_category' as manage_category %}
+          {% url 'billing:create_category' as create_category %}
+          <a href="{{manage_category}}" class="nav-link {% if request.path == manage_category %} active {% endif %} {% if request.path == create_category %} active {% endif %}">
+            <i class="nav-icon fab fa-accessible-icon"></i>
+            <p>
+             Manage Category
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'billing:manage_product' as manage_product %}
+          {% url 'billing:create_product' as create_product %}
+          <a href="{{manage_product }}" class="nav-link {% if request.path == manage_product %} active {% endif %} {% if request.path == create_product %} active {% endif %}">
+            <i class="nav-icon fab fa-accusoft"></i>
+            <p>
+             Manage Services
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:manage_trip' as manage_trip %}
+          {% url 'billing:create_trip' as create_trip %}
+          {% url 'billing:edit_trip' id as edit_trip %}
+          <a href="{{manage_trip}}" class="nav-link {% if request.path == manage_trip %} active {% endif %} {% if request.path == create_trip %} active {% endif %}
+          {% if request.path == edit_trip %} active {% endif %}">
+            <i class="nav-icon fa fa-road"></i>
+            <p>
+             Manage Trips
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:manage_orders' as manage_orders %}
+          {% url 'billing:create_customer' as create_customer %}
+          {% url 'billing:orderitems' as orderitems %}
+          {% url 'billing:orderitems' as checkout %}
+          {% url 'billing:Vew_order' order.id as Vew_order %}
+          <a href="{{manage_orders}}" class="nav-link {% if request.path == manage_orders %} active {% endif %} {% if request.path == create_customer %} active {% endif %}
+          {% if request.path == orderitems %} active {% endif %}{% if request.path == checkout %} active {% endif %}
+          {% if request.path == Vew_order %} active {% endif %}">
+
+            <i class="nav-icon fab fa-affiliatetheme"></i>
+            <p>
+             Manage Activities
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:error_orders' as error_orders %}
+
+          <a href="{{error_orders}}" class="nav-link {% if request.path == error_orders %} active {% endif %} ">
+
+            <i class="nav-icon fab fa-affiliatetheme"></i>
+            <p>
+             Error Correction
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+
+          {% url 'billing:search_orders' as search_orders %}
+          <a href="{{search_orders}}" class="nav-link {% if request.path == search_orders %} active {% endif %} ">
+
+            <i class="nav-icon ffa fa-search"></i>
+            <p>
+             Search Activities
+            </p>
+          </a>
+        </li>
+        <br>
+        <li class=bg-white class="nav-item">
+          <!-- {% url 'student_home' as student_home %} -->
+          <!-- {% if request.path == student_home %} active {% endif %} -->
+          <a href="#" class="nav-link ">
+            <i class="nav-icon fas fa-chart-line"></i>
+            <p>
+              Accounts
+
+            </p>
+          </a>
+        </li>
+        <br>
+        <li class="nav-item">
+          {% url 'billing:manage_pv' as manage_pv %}
+          {% url 'billing:create_pv' as create_pv %}
+          {% url 'billing:pv_detail' as pv_detail %}
+          {% url 'billing:View_pv' order.id as View_pv %}
+          <a href="{{manage_pv}}" class="nav-link {% if request.path == manage_pv %} active {% endif %} {% if request.path == create_pv %} active {% endif %}
+          {% if request.path == pv_detail %} active {% endif %}{% if request.path == View_pv %} active {% endif %}">
+
+            <i class="nav-icon fas fa-comment-dollar"></i>
+            <p>
+             Manage Pv's
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:pending_pv' as pending_pv %}
+
+          <a href="{{pending_pv}}" class="nav-link {% if request.path == pending_pv %} active {% endif %} ">
+
+            <i class="nav-icon fas fa-donate"></i>
+            <p>
+             Approve Pv's
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:daily_sales' as daily_sales %}
+
+          <a href="{{daily_sales}}" class="nav-link {% if request.path == daily_sales %} active {% endif %} ">
+
+            <i class="nav-icon fas fa-balance-scale-right"></i>
+            <p>
+             Daily Income Stream
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:allrevenue' as allrevenue %}
+
+          <a href="{{allrevenue}}" class="nav-link {% if request.path == allrevenue %} active {% endif %} ">
+
+            <i class="nav-icon fas fa-balance-scale-right"></i>
+            <p>
+             Income Stream
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          {% url 'billing:allexpenses' as allexpenses %}
+
+          <a href="{{ allexpenses }}" class="nav-link {% if request.path == allexpenses %} active {% endif %}">
+
+            <i class="nav-icon fas fa-balance-scale-left"></i>
+            <p>
+             Expenditure Stream
+            </p>
+          </a>
+        </li>
+        <!--<li class="nav-item">-->
+        <!--  {% url 'billing:income_expenditure' as income_expenditure %}-->
+
+        <!--  <a href="{{income_expenditure}}" class="nav-link {% if request.path == income_expenditure %} active {% endif %} ">-->
+
+        <!--    <i class="nav-icon fas fa-balance-scale"></i>-->
+        <!--    <p>-->
+        <!--     Income & Expenditure-->
+        <!--    </p>-->
+        <!--  </a>-->
+        <!--</li>-->
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+{% else %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'billing:manage_orders' %}" class="brand-link">
+    <img src="{% static 'dist/img/logo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light"><b>DVLA</b>  Billing System</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+        <li class=bg-white class="nav-item">
+          <!-- {% url 'student_home' as student_home %} -->
+          <!-- {% if request.path == student_home %} active {% endif %} -->
+          <a href="{% url 'billing:manage_orders' %}" class="nav-link ">
+            <i class="nav-icon fas fa-anchor"></i>
+            <p>
+              Home
+              {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+            </p>
+          </a>
+        </li>
+        <br>
+
+        <li class="nav-item">
+          {% url 'billing:manage_orders' as manage_orders %}
+          {% url 'billing:create_customer' as create_customer %}
+          {% url 'billing:orderitems' as orderitems %}
+          {% url 'billing:orderitems' as checkout %}
+          {% url 'billing:Vew_order' order.id as Vew_order %}
+          <a href="{{manage_orders}}" class="nav-link {% if request.path == manage_orders %} active {% endif %} {% if request.path == create_customer %} active {% endif %}
+          {% if request.path == orderitems %} active {% endif %}{% if request.path == checkout %} active {% endif %}
+          {% if request.path == Vew_order %} active {% endif %}">
+
+            <i class="nav-icon fab fa-affiliatetheme"></i>
+            <p>
+             Manage Activities
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+
+          {% url 'billing:search_orders' as search_orders %}
+          <a href="{{search_orders}}" class="nav-link {% if request.path == search_orders %} active {% endif %} ">
+
+            <i class="nav-icon ffa fa-search"></i>
+            <p>
+             Search Activities
+            </p>
+          </a>
+        </li>
+        <br>
+        <li class=bg-white class="nav-item">
+          <!-- {% url 'student_home' as student_home %} -->
+          <!-- {% if request.path == student_home %} active {% endif %} -->
+          <a href="#" class="nav-link ">
+            <i class="nav-icon fas fa-chart-line"></i>
+            <p>
+              Accounts
+
+            </p>
+          </a>
+        </li>
+        <br>
+        <li class="nav-item">
+          {% url 'billing:manage_pv' as manage_pv %}
+          {% url 'billing:create_pv' as create_pv %}
+          {% url 'billing:pv_detail' as pv_detail %}
+          {% url 'billing:View_pv' order.id as View_pv %}
+          <a href="{{manage_pv}}" class="nav-link {% if request.path == manage_pv %} active {% endif %} {% if request.path == create_pv %} active {% endif %}
+          {% if request.path == pv_detail %} active {% endif %}{% if request.path == View_pv %} active {% endif %}">
+
+            <i class="nav-icon fas fa-comment-dollar"></i>
+            <p>
+             Manage Pv's
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'billing:daily_sales' as daily_sales %}
+
+          <a href="{{daily_sales}}" class="nav-link {% if request.path == daily_sales %} active {% endif %} ">
+
+            <i class="nav-icon fas fa-balance-scale-right"></i>
+            <p>
+             Daily Income Stream
+            </p>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+{% endif %}
+{% endfor %}
